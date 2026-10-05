@@ -1,0 +1,22 @@
+appId: uk.trackside.app
+---
+- launchApp:
+    clearState: true
+- tapOn: "Log"
+- tapOn: "e.g. 37025"
+- inputText: "37025"
+- tapOn: "Save sighting"
+- extendedWaitUntil:
+    visible: "37025"
+    timeout: 10000
+- tapOn: "Profile"
+- assertVisible: "1"
+- assertVisible: "Class 37"
+- stopApp
+- launchApp
+- tapOn: "Profile"
+- assertVisible: "Class 37"
+- tapOn: "Home"
+- tapOn: "Options for 37025"
+- tapOn: "Remove"
+- assertNotVisible: "37025"

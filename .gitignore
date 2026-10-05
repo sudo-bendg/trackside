@@ -6,3 +6,7 @@
 !package.json
 !src/
 !src/**/*
+!App.test.tsx
+!jest.setup.ts
+!maestro/
+!maestro/**/*

@@ -1,0 +1,8 @@
+appId: uk.trackside.app
+---
+- launchApp:
+    clearState: true
+- tapOn: "Run SQLite integration suite"
+- extendedWaitUntil:
+    visible: "SQLite integration: PASS"
+    timeout: 30000
