@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Trackside",
+    "slug": "trackside",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "uk.trackside.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Take a photo to remember your train sighting.",
+        "NSPhotoLibraryUsageDescription": "Choose a photo to add to your train sighting."
+      }
+    },
+    "android": {
+      "package": "uk.trackside.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#F6F5EF"
+      }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Trackside to add photos to your train sightings.",
+          "cameraPermission": "Allow Trackside to take photos of your train sightings.",
+          "microphonePermission": false
+        }
+      ],
+      "expo-sqlite",
+      "expo-status-bar",
+      "expo-font"
+    ]
+  }
+}
