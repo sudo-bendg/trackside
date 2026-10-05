@@ -1,7 +1,8 @@
 *
-!App.js
+!tsconfig.json
+!App.tsx
 !app.json
 !package-lock.json
 !package.json
 !src/
-!src/*
+!src/**/*

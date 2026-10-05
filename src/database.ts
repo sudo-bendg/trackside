@@ -1,4 +1,7 @@
-export async function initializeDatabase(database) {
+import type { SQLiteDatabase } from "expo-sqlite";
+import type { Sighting } from "./types";
+
+export async function initializeDatabase(database: SQLiteDatabase): Promise<void> {
   await database.execAsync(`
     PRAGMA journal_mode = WAL;
     CREATE TABLE IF NOT EXISTS sightings (
@@ -15,8 +18,8 @@ export async function initializeDatabase(database) {
   `);
 }
 
-export async function getSightings(database) {
-  return database.getAllAsync(`
+export async function getSightings(database: SQLiteDatabase): Promise<Sighting[]> {
+  return database.getAllAsync<Sighting>(`
     SELECT sighting_id, tops_number, class_number, location_spotted,
       location_destination, photo_uri, spotted_at
     FROM sightings
@@ -24,7 +27,10 @@ export async function getSightings(database) {
   `);
 }
 
-export async function saveSighting(database, sighting) {
+export async function saveSighting(
+  database: SQLiteDatabase,
+  sighting: Sighting,
+): Promise<void> {
   await database.runAsync(
     `INSERT INTO sightings (
       sighting_id, tops_number, class_number, location_spotted,
@@ -40,7 +46,10 @@ export async function saveSighting(database, sighting) {
   );
 }
 
-export async function deleteSighting(database, sightingId) {
+export async function deleteSighting(
+  database: SQLiteDatabase,
+  sightingId: string,
+): Promise<void> {
   await database.runAsync(
     "DELETE FROM sightings WHERE sighting_id = ?",
     sightingId,
