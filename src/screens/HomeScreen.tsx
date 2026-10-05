@@ -6,6 +6,7 @@ import { formatDate } from "../utils";
 import { COLORS } from "../theme";
 import { styles } from "../styles";
 import { SightingCard } from "../components/SightingCard";
+import { getPressableStyle } from "../pressableStyle";
 
 type HomeScreenProps = {
   sightings: Sighting[];
@@ -67,7 +68,7 @@ export function HomeScreen({ sightings, onLog, onDelete, onRefresh, loading }: H
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="Log a train sighting"
-            style={({ pressed }) => [styles.summaryAdd, pressed && styles.pressed]}
+            style={({ pressed }) => getPressableStyle(styles.summaryAdd, pressed)}
             onPress={onLog}
           >
             <Ionicons name="add" size={23} color={COLORS.greenDark} />
@@ -113,7 +114,7 @@ export function HomeScreen({ sightings, onLog, onDelete, onRefresh, loading }: H
           </Text>
           <Pressable
             accessibilityRole="button"
-            style={({ pressed }) => [styles.primaryButton, pressed && styles.pressed]}
+            style={({ pressed }) => getPressableStyle(styles.primaryButton, pressed)}
             onPress={onLog}
           >
             <Ionicons name="add" size={19} color={COLORS.white} />

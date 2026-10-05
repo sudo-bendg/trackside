@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { COLORS } from "../theme";
 import { styles } from "../styles";
+import { getPressableStyle } from "../pressableStyle";
 import { TABS, type TabKey } from "./tabs";
 
 type BottomTabBarProps = {
@@ -23,7 +24,7 @@ export function BottomTabBar({ activeTab, onTabChange }: BottomTabBarProps) {
             accessibilityRole="tab"
             accessibilityState={{ selected: active }}
             onPress={() => onTabChange(tab.key)}
-            style={({ pressed }) => [styles.tabItem, pressed && styles.pressed]}
+            style={({ pressed }) => getPressableStyle(styles.tabItem, pressed)}
           >
             <Ionicons
               name={active ? tab.activeIcon : tab.icon}

@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import type { IconName } from "../types";
 import { COLORS } from "../theme";
 import { styles } from "../styles";
+import { getPressableStyle } from "../pressableStyle";
 
 type IconButtonProps = { name: IconName; onPress: () => void; accessibilityLabel: string; color?: string };
 
@@ -12,7 +13,7 @@ export function IconButton({ name, onPress, accessibilityLabel, color = COLORS.g
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
       onPress={onPress}
-      style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
+      style={({ pressed }) => getPressableStyle(styles.iconButton, pressed)}
     >
       <Ionicons name={name} size={19} color={color} />
     </Pressable>

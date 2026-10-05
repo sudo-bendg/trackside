@@ -10,6 +10,7 @@ import { getClassNumber, getErrorMessage } from "../utils";
 import { COLORS } from "../theme";
 import { styles } from "../styles";
 import { FormField } from "../components/FormField";
+import { getPressableStyle } from "../pressableStyle";
 
 type LogScreenProps = { onSaved: () => Promise<void> };
 
@@ -181,7 +182,7 @@ export function LogScreen({ onSaved }: LogScreenProps) {
             <Pressable
               accessibilityRole="button"
               onPress={addPhoto}
-              style={({ pressed }) => [styles.photoButton, pressed && styles.pressed]}
+              style={({ pressed }) => getPressableStyle(styles.photoButton, pressed)}
             >
               <View style={styles.photoButtonIcon}>
                 <Ionicons name="camera-outline" size={22} color={COLORS.green} />
@@ -196,12 +197,12 @@ export function LogScreen({ onSaved }: LogScreenProps) {
 
           <Pressable
             accessibilityRole="button"
+            accessibilityLabel="Save sighting"
             disabled={saving}
             onPress={submit}
             style={({ pressed }) => [
-              styles.primaryButton,
+              ...getPressableStyle(styles.primaryButton, pressed),
               styles.saveButton,
-              pressed && styles.pressed,
               saving && styles.disabledButton,
             ]}
           >
