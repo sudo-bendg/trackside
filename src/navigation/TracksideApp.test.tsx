@@ -1,4 +1,4 @@
-import { Alert } from "react-native";
+import { Alert, RefreshControl } from "react-native";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react-native";
 import * as FileSystem from "expo-file-system/legacy";
 import { useSQLiteContext } from "expo-sqlite";
@@ -86,6 +86,15 @@ describe("TracksideApp", () => {
         "database offline",
       ),
     );
+  });
+
+  it("refreshes sightings from the home screen pull-to-refresh control", async () => {
+    render(<TracksideApp />);
+
+    await waitFor(() => expect(mockGetSightings).toHaveBeenCalledTimes(1));
+    fireEvent(screen.UNSAFE_getByType(RefreshControl), "refresh");
+
+    await waitFor(() => expect(mockGetSightings).toHaveBeenCalledTimes(2));
   });
 
   it("deletes a sighting and removes its app-owned photo", async () => {
