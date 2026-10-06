@@ -1,7 +1,7 @@
 *
+!.easignore
 !tsconfig.json
 !App.tsx
-!app.json
 !package-lock.json
 !package.json
 !src/
@@ -10,3 +10,4 @@
 !jest.setup.ts
 !maestro/
 !maestro/**/*
+!README.md
