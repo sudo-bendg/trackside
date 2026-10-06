@@ -21,7 +21,7 @@ export function HomeScreen({ sightings, onLog, onDelete, onRefresh, loading }: H
     () => new Set(sightings.map((sighting) => sighting.class_number)).size,
     [sightings],
   );
-  const recentSightings = sightings.slice(0, 20);exp://192.168.1.153:8081
+  const recentSightings = sightings.slice(0, 20);
 
   return (
     <ScrollView

@@ -21,7 +21,6 @@ export function TracksideApp() {
   const [loading, setLoading] = useState(true);
 
   const refreshSightings = useCallback(async () => {
-    setLoading(true);
     try {
       const records = await getSightings(database);
       setSightings(records);
@@ -31,6 +30,11 @@ export function TracksideApp() {
       setLoading(false);
     }
   }, [database]);
+
+  const handleRefresh = useCallback(() => {
+    setLoading(true);
+    void refreshSightings();
+  }, [refreshSightings]);
 
   useEffect(() => {
     refreshSightings();
@@ -71,7 +75,7 @@ export function TracksideApp() {
             sightings={sightings}
             onLog={() => setActiveTab("log")}
             onDelete={handleDelete}
-            onRefresh={refreshSightings}
+            onRefresh={handleRefresh}
             loading={loading}
           />
         ) : activeTab === "log" ? (

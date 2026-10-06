@@ -1,4 +1,7 @@
 *
+!/.github/
+!/.github/**
+!/eslint.config.mjs
 !.easignore
 !tsconfig.json
 !App.tsx
