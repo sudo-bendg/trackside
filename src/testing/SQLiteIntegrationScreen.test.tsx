@@ -81,10 +81,11 @@ describe("native SQLite integration harness", () => {
 
     fireEvent.press(screen.getByRole("button", { name: "Run SQLite integration suite" }));
 
-    await waitFor(() =>
-      expect(screen.getByTestId("sqlite-integration-status").props.children).toContain(
-        "PASS",
-      ),
+    await waitFor(
+      () =>
+        expect(
+          screen.getByTestId("sqlite-integration-status").props.children,
+        ).toContain("PASS"),
     );
   });
 
