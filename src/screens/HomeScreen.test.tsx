@@ -16,6 +16,7 @@ const makeSighting = (id: number, classNumber = "37"): Sighting => ({
 const defaultProps = {
   onLog: jest.fn(),
   onDelete: jest.fn(),
+  onEdit: jest.fn(),
   onRefresh: jest.fn(),
   loading: false,
 };

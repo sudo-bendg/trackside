@@ -46,6 +46,29 @@ export async function saveSighting(
   );
 }
 
+export async function editSighting(
+  database: SQLiteDatabase,
+  sighting: Sighting,
+): Promise<void> {
+  await database.runAsync(
+    `UPDATE sightings SET
+      tops_number = ?,
+      class_number = ?,
+      location_spotted = ?,
+      location_destination = ?,
+      photo_uri = ?,
+      spotted_at = ?
+    WHERE sighting_id = ?`,
+    sighting.tops_number,
+    sighting.class_number,
+    sighting.location_spotted || null,
+    sighting.location_destination || null,
+    sighting.photo_uri || null,
+    sighting.spotted_at,
+    sighting.sighting_id,
+  );
+}
+
 export async function deleteSighting(
   database: SQLiteDatabase,
   sightingId: string,

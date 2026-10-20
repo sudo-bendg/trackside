@@ -11,6 +11,7 @@ import { styles } from "../styles";
 import { HomeScreen } from "../screens/HomeScreen";
 import { LogScreen } from "../screens/LogScreen";
 import { ProfileScreen } from "../screens/ProfileScreen";
+import { EditSightingModal } from "../components/EditSightingModal";
 import type { TabKey } from "./tabs";
 import { BottomTabBar } from "./BottomTabBar";
 
@@ -18,6 +19,7 @@ export function TracksideApp() {
   const database = useSQLiteContext();
   const [activeTab, setActiveTab] = useState<TabKey>("home");
   const [sightings, setSightings] = useState<Sighting[]>([]);
+  const [sightingToEdit, setSightingToEdit] = useState<Sighting | null>(null);
   const [loading, setLoading] = useState(true);
 
   const refreshSightings = useCallback(async () => {
@@ -75,6 +77,7 @@ export function TracksideApp() {
             sightings={sightings}
             onLog={() => setActiveTab("log")}
             onDelete={handleDelete}
+            onEdit={setSightingToEdit}
             onRefresh={handleRefresh}
             loading={loading}
           />
@@ -85,6 +88,13 @@ export function TracksideApp() {
         )}
       </View>
       <BottomTabBar activeTab={activeTab} onTabChange={setActiveTab} />
+      <EditSightingModal
+        key={sightingToEdit?.sighting_id ?? "closed"}
+        sighting={sightingToEdit}
+        visible={sightingToEdit !== null}
+        onClose={() => setSightingToEdit(null)}
+        onSaved={refreshSightings}
+      />
     </SafeAreaView>
   );
 }
