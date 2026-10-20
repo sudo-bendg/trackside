@@ -1,4 +1,4 @@
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react-native";
 import { useSQLiteContext } from "expo-sqlite";
 import { editSighting } from "../database";
@@ -78,5 +78,43 @@ describe("EditSightingModal", () => {
       "Enter a 4, 5, or 6 digit TOPS number.",
     );
     expect(mockEditSighting).not.toHaveBeenCalled();
+  });
+
+  it("does not save when there is no sighting and supports non-iOS layout", () => {
+    jest.replaceProperty(Platform, "OS", "android");
+    render(
+      <EditSightingModal
+        sighting={null}
+        visible
+        onClose={jest.fn()}
+        onSaved={jest.fn()}
+      />,
+    );
+
+    fireEvent.press(screen.getByRole("button", { name: "Save changes" }));
+
+    expect(mockEditSighting).not.toHaveBeenCalled();
+  });
+
+  it("shows an alert when saving fails", async () => {
+    const alert = jest.spyOn(Alert, "alert");
+    mockEditSighting.mockRejectedValue(new Error("sqlite unavailable"));
+    render(
+      <EditSightingModal
+        sighting={sighting}
+        visible
+        onClose={jest.fn()}
+        onSaved={jest.fn()}
+      />,
+    );
+
+    fireEvent.press(screen.getByRole("button", { name: "Save changes" }));
+
+    await waitFor(() =>
+      expect(alert).toHaveBeenCalledWith(
+        "Couldn’t save your changes",
+        "sqlite unavailable",
+      ),
+    );
   });
 });
