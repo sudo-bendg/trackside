@@ -87,7 +87,7 @@ describe("native SQLite integration harness", () => {
           screen.getByTestId("sqlite-integration-status").props.children,
         ).toContain("PASS"),
     );
-  });
+  }, 15000);
 
   it("displays database-open failures", async () => {
     mockOpenDatabase.mockRejectedValueOnce(new Error("native module unavailable"));

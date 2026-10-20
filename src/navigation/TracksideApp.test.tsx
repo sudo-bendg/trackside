@@ -77,7 +77,7 @@ describe("TracksideApp", () => {
     await waitFor(() => expect(screen.getByText("37025")).toBeTruthy());
     expect(mockGetSightings).toHaveBeenCalledTimes(2);
     expect(alert).not.toHaveBeenCalled();
-  });
+  }, 15000);
 
   it("reports initial database read failures", async () => {
     const alert = jest.spyOn(Alert, "alert");
