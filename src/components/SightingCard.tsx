@@ -41,7 +41,7 @@ export function SightingCard({ sighting, onDelete, onEdit }: SightingCardProps) 
         accessibilityLabel={`Options for ${sighting.tops_number}`}
         onPress={() =>
           Alert.alert(
-            "Remove this sighting?",
+            "Edit this sighting?",
             `Class ${sighting.class_number} · ${sighting.tops_number}`,
             [
               { text: "Cancel", style: "cancel" },

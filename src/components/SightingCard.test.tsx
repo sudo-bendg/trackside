@@ -54,7 +54,7 @@ describe("SightingCard", () => {
     const buttons = alert.mock.calls[0][2]!;
     buttons[0].onPress?.();
     expect(alert).toHaveBeenCalledWith(
-      "Remove this sighting?",
+      "Edit this sighting?",
       "Class 37 · 37025",
       expect.any(Array),
     );
