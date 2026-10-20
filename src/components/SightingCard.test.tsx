@@ -17,13 +17,12 @@ describe("SightingCard", () => {
   afterEach(() => jest.restoreAllMocks());
 
   it("shows sighting details, location, destination, and fallback train art", () => {
-    render(<SightingCard sighting={sighting} onDelete={jest.fn()} />);
+    render(<SightingCard sighting={sighting} onDelete={jest.fn()} onEdit={jest.fn()} />);
 
     expect(screen.getByText("37025")).toBeTruthy();
     expect(screen.getByText("CLASS 37")).toBeTruthy();
     expect(screen.getByText("Glasgow Central")).toBeTruthy();
     expect(screen.getByText("Edinburgh Waverley")).toBeTruthy();
-    expect(screen.getByText("train-outline")).toBeTruthy();
     expect(screen.getByText("5 Oct 2026")).toBeTruthy();
   });
 
@@ -37,6 +36,7 @@ describe("SightingCard", () => {
           photo_uri: "file:///photo.jpg",
         }}
         onDelete={jest.fn()}
+        onEdit={jest.fn()}
       />,
     );
 
@@ -48,13 +48,13 @@ describe("SightingCard", () => {
   it("offers a keep action without deleting the sighting", () => {
     const alert = jest.spyOn(Alert, "alert");
     const onDelete = jest.fn();
-    render(<SightingCard sighting={sighting} onDelete={onDelete} />);
+    render(<SightingCard sighting={sighting} onDelete={onDelete} onEdit={jest.fn()} />);
     fireEvent.press(screen.getByRole("button", { name: "Options for 37025" }));
 
     const buttons = alert.mock.calls[0][2]!;
     buttons[0].onPress?.();
     expect(alert).toHaveBeenCalledWith(
-      "Remove this sighting?",
+      "Edit this sighting?",
       "Class 37 · 37025",
       expect.any(Array),
     );
@@ -64,11 +64,22 @@ describe("SightingCard", () => {
   it("deletes the sighting when removal is confirmed", () => {
     const alert = jest.spyOn(Alert, "alert");
     const onDelete = jest.fn();
-    render(<SightingCard sighting={sighting} onDelete={onDelete} />);
+    render(<SightingCard sighting={sighting} onDelete={onDelete} onEdit={jest.fn()} />);
+    fireEvent.press(screen.getByRole("button", { name: "Options for 37025" }));
+
+    alert.mock.calls[0][2]![2].onPress?.();
+
+    expect(onDelete).toHaveBeenCalledWith(sighting);
+  });
+
+  it("passes the sighting to the edit action", () => {
+    const alert = jest.spyOn(Alert, "alert");
+    const onEdit = jest.fn();
+    render(<SightingCard sighting={sighting} onDelete={jest.fn()} onEdit={onEdit} />);
     fireEvent.press(screen.getByRole("button", { name: "Options for 37025" }));
 
     alert.mock.calls[0][2]![1].onPress?.();
 
-    expect(onDelete).toHaveBeenCalledWith(sighting);
+    expect(onEdit).toHaveBeenCalledWith(sighting);
   });
 });

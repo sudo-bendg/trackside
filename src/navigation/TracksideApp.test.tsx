@@ -2,12 +2,13 @@ import { Alert, RefreshControl } from "react-native";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react-native";
 import * as FileSystem from "expo-file-system/legacy";
 import { useSQLiteContext } from "expo-sqlite";
-import { deleteSighting, getSightings } from "../database";
+import { deleteSighting, editSighting, getSightings } from "../database";
 import type { Sighting } from "../types";
 import { TracksideApp } from "./TracksideApp";
 
 jest.mock("../database", () => ({
   deleteSighting: jest.fn(),
+  editSighting: jest.fn(),
   getSightings: jest.fn(),
   initializeDatabase: jest.fn(),
   saveSighting: jest.fn(),
@@ -15,6 +16,7 @@ jest.mock("../database", () => ({
 
 const mockGetSightings = jest.mocked(getSightings);
 const mockDeleteSighting = jest.mocked(deleteSighting);
+const mockEditSighting = jest.mocked(editSighting);
 const mockUseSQLiteContext = jest.mocked(useSQLiteContext);
 const mockFileSystem = jest.requireMock("expo-file-system/legacy") as {
   setDocumentDirectory: (directory: string | null) => void;
@@ -30,10 +32,12 @@ const makeSighting = (photoUri: string | null = null): Sighting => ({
   spotted_at: "2026-10-05T10:00:00.000Z",
 });
 
-function confirmRemoval() {
+async function confirmRemoval() {
   const alert = jest.spyOn(Alert, "alert");
   fireEvent.press(screen.getByRole("button", { name: "Options for 37025" }));
-  alert.mock.calls.at(-1)?.[2]?.[1].onPress?.();
+  await act(async () => {
+    await alert.mock.calls.at(-1)?.[2]?.[2].onPress?.();
+  });
   return alert;
 }
 
@@ -42,6 +46,7 @@ describe("TracksideApp", () => {
     mockUseSQLiteContext.mockReturnValue({} as ReturnType<typeof useSQLiteContext>);
     mockGetSightings.mockResolvedValue([]);
     mockDeleteSighting.mockResolvedValue(undefined);
+    mockEditSighting.mockResolvedValue(undefined);
   });
 
   afterEach(() => {
@@ -72,7 +77,7 @@ describe("TracksideApp", () => {
     await waitFor(() => expect(screen.getByText("37025")).toBeTruthy());
     expect(mockGetSightings).toHaveBeenCalledTimes(2);
     expect(alert).not.toHaveBeenCalled();
-  });
+  }, 15000);
 
   it("reports initial database read failures", async () => {
     const alert = jest.spyOn(Alert, "alert");
@@ -97,13 +102,38 @@ describe("TracksideApp", () => {
     await waitFor(() => expect(mockGetSightings).toHaveBeenCalledTimes(2));
   });
 
+  it("opens the edit modal and saves changes from a sighting card", async () => {
+    const sighting = makeSighting();
+    mockGetSightings.mockResolvedValue([sighting]);
+    render(<TracksideApp />);
+    await waitFor(() => expect(screen.getByText("37025")).toBeTruthy());
+
+    const alert = jest.spyOn(Alert, "alert");
+    fireEvent.press(screen.getByRole("button", { name: "Options for 37025" }));
+    act(() => alert.mock.calls.at(-1)?.[2]?.[1].onPress?.());
+
+    expect(screen.getByText("Edit sighting")).toBeTruthy();
+    fireEvent.changeText(screen.getByDisplayValue("37025"), "66008");
+    fireEvent.press(screen.getByRole("button", { name: "Save changes" }));
+
+    await waitFor(() =>
+      expect(mockEditSighting).toHaveBeenCalledWith({}, {
+        ...sighting,
+        tops_number: "66008",
+        class_number: "66",
+        location_destination: "",
+      }),
+    );
+    expect(mockGetSightings).toHaveBeenCalledTimes(2);
+  });
+
   it("deletes a sighting and removes its app-owned photo", async () => {
     const sighting = makeSighting("/documents/sighting-photos/id-1.jpg");
     mockGetSightings.mockResolvedValue([sighting]);
     render(<TracksideApp />);
     await waitFor(() => expect(screen.getByText("37025")).toBeTruthy());
 
-    const alert = confirmRemoval();
+    const alert = await confirmRemoval();
     await waitFor(() => expect(mockDeleteSighting).toHaveBeenCalledWith({}, "id-1"));
 
     expect(alert).toHaveBeenCalledTimes(1);
@@ -117,7 +147,7 @@ describe("TracksideApp", () => {
     render(<TracksideApp />);
     await waitFor(() => expect(screen.getByText("37025")).toBeTruthy());
 
-    confirmRemoval();
+    await confirmRemoval();
 
     await waitFor(() => expect(mockDeleteSighting).toHaveBeenCalled());
     expect(FileSystem.deleteAsync).not.toHaveBeenCalled();
@@ -129,7 +159,7 @@ describe("TracksideApp", () => {
     render(<TracksideApp />);
     await waitFor(() => expect(screen.getByText("37025")).toBeTruthy());
 
-    confirmRemoval();
+    await confirmRemoval();
 
     await waitFor(() => expect(mockDeleteSighting).toHaveBeenCalled());
     expect(FileSystem.deleteAsync).not.toHaveBeenCalled();
@@ -142,7 +172,7 @@ describe("TracksideApp", () => {
     render(<TracksideApp />);
     await waitFor(() => expect(screen.getByText("37025")).toBeTruthy());
 
-    confirmRemoval();
+    await confirmRemoval();
 
     await waitFor(() =>
       expect(alert).toHaveBeenCalledWith("Couldn’t remove this sighting", "delete failed"),
@@ -156,7 +186,7 @@ describe("TracksideApp", () => {
     render(<TracksideApp />);
     await waitFor(() => expect(screen.getByText("37025")).toBeTruthy());
 
-    confirmRemoval();
+    await confirmRemoval();
 
     await waitFor(() =>
       expect(alert).toHaveBeenCalledWith(

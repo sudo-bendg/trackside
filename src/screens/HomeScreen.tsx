@@ -12,11 +12,12 @@ type HomeScreenProps = {
   sightings: Sighting[];
   onLog: () => void;
   onDelete: (sighting: Sighting) => void;
+  onEdit: (sighting: Sighting) => void;
   onRefresh: () => void;
   loading: boolean;
 };
 
-export function HomeScreen({ sightings, onLog, onDelete, onRefresh, loading }: HomeScreenProps) {
+export function HomeScreen({ sightings, onLog, onDelete, onEdit, onRefresh, loading }: HomeScreenProps) {
   const uniqueClasses = useMemo(
     () => new Set(sightings.map((sighting) => sighting.class_number)).size,
     [sightings],
@@ -94,6 +95,7 @@ export function HomeScreen({ sightings, onLog, onDelete, onRefresh, loading }: H
               key={sighting.sighting_id}
               sighting={sighting}
               onDelete={onDelete}
+              onEdit={onEdit}
             />
           ))}
           {sightings.length > recentSightings.length ? (

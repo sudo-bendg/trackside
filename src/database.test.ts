@@ -1,6 +1,7 @@
 import type { SQLiteDatabase } from "expo-sqlite";
 import {
   deleteSighting,
+  editSighting,
   getSightings,
   initializeDatabase,
   saveSighting,
@@ -94,6 +95,45 @@ describe("SQLite data access", () => {
     ]);
   });
 
+  it("updates all fields and stores blank optional values as SQL NULL", async () => {
+    const database = makeDatabase();
+
+    await editSighting(database as unknown as SQLiteDatabase, sighting);
+
+    expect(database.runAsync).toHaveBeenCalledWith(
+      expect.stringContaining("UPDATE sightings SET"),
+      "37025",
+      "37",
+      null,
+      null,
+      null,
+      "2026-10-05T10:00:00.000Z",
+      "id-1",
+    );
+  });
+
+  it("preserves non-empty optional fields when updating", async () => {
+    const database = makeDatabase();
+    const completeSighting = {
+      ...sighting,
+      location_spotted: "Glasgow Central",
+      location_destination: "Edinburgh Waverley",
+      photo_uri: "file:///sighting.jpg",
+    };
+
+    await editSighting(database as unknown as SQLiteDatabase, completeSighting);
+
+    expect(database.runAsync.mock.calls[0].slice(1)).toEqual([
+      "37025",
+      "37",
+      "Glasgow Central",
+      "Edinburgh Waverley",
+      "file:///sighting.jpg",
+      "2026-10-05T10:00:00.000Z",
+      "id-1",
+    ]);
+  });
+
   it("deletes by sighting ID", async () => {
     const database = makeDatabase();
 
@@ -120,6 +160,9 @@ describe("SQLite data access", () => {
     );
     await expect(
       saveSighting(database as unknown as SQLiteDatabase, sighting),
+    ).rejects.toBe(failure);
+    await expect(
+      editSighting(database as unknown as SQLiteDatabase, sighting),
     ).rejects.toBe(failure);
     await expect(
       deleteSighting(database as unknown as SQLiteDatabase, "id-1"),

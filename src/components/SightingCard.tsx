@@ -6,18 +6,16 @@ import { COLORS } from "../theme";
 import { styles } from "../styles";
 import { IconButton } from "./IconButton";
 
-type SightingCardProps = { sighting: Sighting; onDelete: (sighting: Sighting) => void };
+type SightingCardProps = {
+  sighting: Sighting;
+  onDelete: (sighting: Sighting) => void;
+  onEdit: (sighting: Sighting) => void;
+};
 
-export function SightingCard({ sighting, onDelete }: SightingCardProps) {
+export function SightingCard({ sighting, onDelete, onEdit }: SightingCardProps) {
   return (
     <View style={styles.sightingCard}>
-      {sighting.photo_uri ? (
-        <Image source={{ uri: sighting.photo_uri }} style={styles.sightingPhoto} />
-      ) : (
-        <View style={styles.trainBadge}>
-          <Ionicons name="train-outline" size={23} color={COLORS.green} />
-        </View>
-      )}
+      {sighting.photo_uri && (<Image source={{ uri: sighting.photo_uri }} style={styles.sightingPhoto} />)}
       <View style={styles.sightingDetails}>
         <View style={styles.sightingTopline}>
           <Text style={styles.topsNumber}>{sighting.tops_number}</Text>
@@ -43,10 +41,11 @@ export function SightingCard({ sighting, onDelete }: SightingCardProps) {
         accessibilityLabel={`Options for ${sighting.tops_number}`}
         onPress={() =>
           Alert.alert(
-            "Remove this sighting?",
+            "Edit this sighting?",
             `Class ${sighting.class_number} · ${sighting.tops_number}`,
             [
-              { text: "Keep it", style: "cancel" },
+              { text: "Cancel", style: "cancel" },
+              { text: "Edit", onPress: () => onEdit(sighting) },
               {
                 text: "Remove",
                 style: "destructive",
