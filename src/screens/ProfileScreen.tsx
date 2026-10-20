@@ -38,7 +38,7 @@ export function ProfileScreen({ sightings }: ProfileScreenProps) {
         <View style={styles.profileAvatar}>
           <Ionicons name="train" size={30} color={COLORS.green} />
         </View>
-        <Text style={styles.profileName}>The spotter</Text>
+        <Text style={styles.profileName}>You</Text>
         <View style={styles.localBadge}>
           <Ionicons name="phone-portrait-outline" size={13} color={COLORS.green} />
           <Text style={styles.localBadgeText}>LOCAL JOURNAL</Text>

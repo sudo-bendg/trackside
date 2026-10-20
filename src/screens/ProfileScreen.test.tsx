@@ -21,7 +21,7 @@ describe("ProfileScreen", () => {
   it("renders empty collection statistics and the first-sighting prompt", () => {
     render(<ProfileScreen sightings={[]} />);
 
-    expect(screen.getByText("The spotter")).toBeTruthy();
+    expect(screen.getByText("You")).toBeTruthy();
     expect(screen.getAllByText("0")).toHaveLength(3);
     expect(screen.getByText("—")).toBeTruthy();
     expect(screen.getByText("Your first one is waiting")).toBeTruthy();
