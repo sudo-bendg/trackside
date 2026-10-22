@@ -1,0 +1,8 @@
+appId: com.bengodfrey.dev.trackside
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Nothing on the board. Yet."
+- assertVisible: "Log your first sighting"
+- tapOn: "Profile"
+- assertVisible: "Your first one is waiting"

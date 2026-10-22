@@ -35,6 +35,17 @@ boundary; SQLite wrapper unit tests separately verify SQL and bound values.
 Coverage thresholds are enforced at 100% for statements, branches, functions,
 and lines.
 
+### E2E
+
+E2E tests have been written using Maestro. These can be run against an Android emulator. To run these tests, take the following steps:
+
+- Ensure Android emulator is running
+- Run `npm run android`
+- Run `npm run test:e2e`
+- Hope that nothing fails
+
+This will create a `reports` repo with a html report generated for the run.
+
 ## Android Builds
 
 Create a local APK or app bundle with EAS:

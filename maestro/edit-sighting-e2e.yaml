@@ -1,0 +1,19 @@
+appId: com.bengodfrey.dev.trackside
+---
+- launchApp:
+    clearState: true
+- tapOn: "Log"
+- tapOn: "e.g. 37025"
+- inputText: "37025"
+- tapOn: "Save sighting"
+- tapOn: "Options for 37025"
+- tapOn: "Edit"
+- tapOn: "37025"
+- eraseText: 5
+- inputText: "47812"
+- hideKeyboard
+- tapOn: "Save changes"
+- assertVisible: "47812"
+- assertNotVisible: "37025"
+- tapOn: "Profile"
+- assertVisible: "Class 47"
