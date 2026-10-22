@@ -35,6 +35,27 @@ boundary; SQLite wrapper unit tests separately verify SQL and bound values.
 Coverage thresholds are enforced at 100% for statements, branches, functions,
 and lines.
 
+## Android Builds
+
+Create a local APK or app bundle with EAS:
+
+```sh
+npm run build:apk
+npm run build:aab
+```
+
+`build:apk` uses the `preview` profile and produces an APK. `build:aab` uses the
+`production` profile and produces an Android App Bundle. Both commands generate
+the app icon PNGs from `assets/logo.svg` before EAS archives the project.
+
+Local Android builds require the Android SDK and JDK 17. On Linux, select JDK 17
+before running either command; update the path if JDK 17 is installed elsewhere:
+
+```sh
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export PATH="$JAVA_HOME/bin:$PATH"
+```
+
 The real SQLite integration suite runs in the app on a device or simulator
 against an isolated `:memory:` database. Build and launch the integration
 screen, then run its Maestro flow:
