@@ -1,12 +1,12 @@
 {
   "name": "trackside",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "icon:png": "sharp -i assets/logo.svg -o assets/icon.png --density 144 resize 1024 1024 -- flatten '#ffffff' && sharp -i assets/logo.svg -o assets/adaptive-icon.png --density 144 resize 1024 1024",
     "build:aab": "./scripts/build.aab.sh",
     "build:apk": "./scripts/build.apk.sh",
@@ -14,7 +14,8 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "lint": "eslint App.tsx src --max-warnings=0",
-    "complexity": "eslint App.tsx src --rule 'complexity: [\"error\", 10]' --max-warnings=0"
+    "complexity": "eslint App.tsx src --rule 'complexity: [\"error\", 10]' --max-warnings=0",
+    "test:e2e": "mkdir -p reports/maestro && maestro test --format HTML --output reports/maestro/local-journal-e2e.html --test-output-dir reports/maestro/artifacts maestro/*.yaml"
   },
   "jest": {
     "preset": "jest-expo",

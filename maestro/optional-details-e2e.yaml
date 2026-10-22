@@ -1,0 +1,19 @@
+appId: com.bengodfrey.dev.trackside
+---
+- launchApp:
+    clearState: true
+- tapOn: "Log"
+- tapOn: "e.g. 37025"
+- inputText: "37025"
+- tapOn: "e.g. Glasgow Central"
+- inputText: "Glasgow Central"
+- assertVisible: "Glasgow Central"
+- hideKeyboard
+- tapOn: "e.g. Edinburgh Waverley"
+- inputText: "Edinburgh Waverley"
+- assertVisible: "Edinburgh Waverley"
+- hideKeyboard
+- tapOn: "Save sighting"
+- assertVisible: "37025"
+- assertVisible: "Glasgow Central"
+- assertVisible: "Edinburgh Waverley"

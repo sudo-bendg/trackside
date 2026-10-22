@@ -1,0 +1,14 @@
+appId: com.bengodfrey.dev.trackside
+---
+- launchApp:
+    clearState: true
+- tapOn: "Log"
+- tapOn: "e.g. 37025"
+- inputText: "123"
+- tapOn: "Save sighting"
+- assertVisible: "Check the train number"
+- assertVisible: "Enter a 4, 5, or 6 digit TOPS number."
+- tapOn: "OK"
+- tapOn: "Log a sighting"
+- tapOn: "Home"
+- assertVisible: "Nothing on the board. Yet."

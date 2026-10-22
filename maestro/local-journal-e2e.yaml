@@ -1,4 +1,4 @@
-appId: uk.trackside.app
+appId: com.bengodfrey.dev.trackside
 ---
 - launchApp:
     clearState: true

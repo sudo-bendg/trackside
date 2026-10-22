@@ -1,0 +1,20 @@
+appId: com.bengodfrey.dev.trackside
+---
+- launchApp:
+    clearState: true
+- tapOn: "Log"
+- tapOn: "e.g. 37025"
+- inputText: "37025"
+- tapOn: "Save sighting"
+- tapOn: "Log"
+- tapOn: "e.g. 37025"
+- inputText: "37123"
+- tapOn: "Save sighting"
+- tapOn: "Log"
+- tapOn: "e.g. 37025"
+- inputText: "47812"
+- tapOn: "Save sighting"
+- tapOn: "Profile"
+- assertVisible: "3"
+- assertVisible: "2"
+- assertVisible: "Class 37"
