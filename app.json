@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "Trackside",
+    "slug": "trackside",
+    "version": "1.0.4",
+    "icon": "./assets/icon.png",
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.bengodfrey.dev.trackside"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "faf65796-0888-463d-95d2-47a61c93a4ea"
+      }
+    },
+    "plugins": [
+      "expo-sqlite"
+    ]
+  }
+}
