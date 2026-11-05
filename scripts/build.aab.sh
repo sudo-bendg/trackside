@@ -11,4 +11,4 @@ mkdir -p build 2> /dev/null
 mv ./build* ./build
 
 npm run icon:png
-eas build --platform android --local --profile preview
+eas build --platform android --local --profile production
