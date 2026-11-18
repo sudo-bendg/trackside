@@ -72,7 +72,6 @@ describe("LogScreen", () => {
     expect(screen.getByText("TOPS number")).toBeTruthy();
     expect(screen.getByText("Location spotted")).toBeTruthy();
     expect(screen.getByText("Destination")).toBeTruthy();
-    expect(screen.getByText(/Saved privately on this device/)).toBeTruthy();
   });
 
   it("uses Android keyboard-avoidance behavior on Android", () => {

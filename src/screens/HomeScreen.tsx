@@ -124,10 +124,6 @@ export function HomeScreen({ sightings, onLog, onDelete, onEdit, onRefresh, load
           </Pressable>
         </View>
       )}
-      <Text style={styles.privacyNote}>
-        <Ionicons name="phone-portrait-outline" size={13} color={COLORS.muted} />{" "}
-        Your journal is saved on this device
-      </Text>
     </ScrollView>
   );
 }

@@ -90,15 +90,6 @@ export function ProfileScreen({ sightings }: ProfileScreenProps) {
         </View>
       </View>
 
-      <View style={styles.aboutCard}>
-        <View style={styles.aboutIcon}><Ionicons name="heart-outline" size={19} color={COLORS.orange} /></View>
-        <View style={styles.aboutCopy}>
-          <Text style={styles.aboutTitle}>Built for the love of trains</Text>
-          <Text style={styles.aboutText}>
-            Your sightings and photos stay on your device. Sharing with the community is under development. Thanks for using Trackside.
-          </Text>
-        </View>
-      </View>
     </ScrollView>
   );
 }

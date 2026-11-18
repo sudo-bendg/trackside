@@ -216,10 +216,6 @@ export function LogScreen({ onSaved }: LogScreenProps) {
             )}
           </Pressable>
         </View>
-        <Text style={styles.formPrivacy}>
-          <Ionicons name="lock-closed-outline" size={13} color={COLORS.muted} />{" "}
-          Saved privately on this device
-        </Text>
       </ScrollView>
     </KeyboardAvoidingView>
   );
