@@ -32,7 +32,9 @@
             "webpEnabled": false
           }
         }
-      ]
+      ],
+      "expo-font",
+      "expo-status-bar"
     ]
   }
 }
